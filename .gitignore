@@ -1,0 +1,9 @@
+
+*.xml
+*.iml
+*.pyc
+*.pyc
+__pycache__/heater_model.cpython-38.pyc
+__pycache__/physics_model.cpython-38.pyc
+__pycache__/PID_model.cpython-38.pyc
+__pycache__/**
