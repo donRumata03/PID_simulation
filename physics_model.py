@@ -42,7 +42,7 @@ class physics:
 
         total_power_now = heater_power - power_lose
 
-        print(power_lose)
+        # print(power_lose)
 
         self.t = min(self.t, self.max_t)
 

@@ -31,11 +31,11 @@ class model:
         d = - self.kd * diff
         i =  - self.ki * self.integral
 
-        print("T:", t, "E:", e, "P:", p, "; I:", i, "; D:", d)
+        # print("T:", t, "E:", e, "P:", p, "; I:", i, "; D:", d)
 
         res = p + i + d
 
-        print("Res:", res)
+        # print("Res:", res)
 
         return res
 
