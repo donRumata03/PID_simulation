@@ -10,7 +10,6 @@ def make_choice(russian_roulette_map, val):
             l = mid
         else:
             r = mid
-
     return r if r < len(russian_roulette_map) else l
 
 
@@ -22,13 +21,11 @@ def choose_mating_chromosomes(population, fitness, number):
         this_prob = fitness[index] / norm_coeff
         russian_roulette_map.append((map_pointer, map_pointer + this_prob))
         map_pointer += this_prob
-
-
     res = []
     for index in range(number):
         res.append(population[make_choice(russian_roulette_map, random.random())])
-
     return res
+
 
 def generate_crossover_offsprings(parents, res_size):
     res = []
@@ -47,6 +44,12 @@ def generate_crossover_offsprings(parents, res_size):
     return res
 
 # TODO: MUTATION
+
+
+def mutate_offsprings(offsprings, coeff_range : list, percent_value):
+    for offspring in offsprings:
+        this_mut_index = random.randint(len(offspring))
+        value = percent_value * coeff_range
 
 if __name__ == '__main__':
     """

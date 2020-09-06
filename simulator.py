@@ -26,7 +26,7 @@ NOISING = False
 
 
 
-def simulate(kp, kd, ki):
+def simulate(kp, kd, ki, power_ret : bool = False):
     h = heater(heater_power, heater_diff_coeff, heater_max_temp)
     m = model(kp, kd, ki, target, lag)
     ph = physics(h, m, t0, lag, lose_coeff)
@@ -43,6 +43,8 @@ def simulate(kp, kd, ki):
         temps.append(t)
         powers.append(lose_power)
 
+
+
     if NOISING:
         noise = make_noise(0, time, lag, target_max=3, percent_sigma=0.2, target_num=len(temps))
         print("noised")
@@ -52,18 +54,29 @@ def simulate(kp, kd, ki):
         plt.show()
         temps += noise
 
-    return list(zip(times, temps))
+    return list(zip(times, temps)) if not power_ret else (list(zip(times, temps)), list(zip(times, powers)))
 
 if __name__ == '__main__':
-    Kp = 2.822339225054539
-    Kd = 30.478187159450126
+    """
+    Very good coefficient set: 
+    
+    Kp = 1.7984277582800892
+    Kd = 26.246846489168846
+    Ki = 0
+    
+    """
+    Kp = 1.7984277582800892
+    Kd = 26.246846489168846
     Ki = 0
 
-    graph = np.array(simulate(Kp, Kd, Ki))
+    temp_graph, power_graph = simulate(Kp, Kd, Ki, True)
+    temp_graph = np.array(temp_graph)
+    power_graph = np.array(power_graph)
 
-    plt.plot(graph.T[0], graph.T[1])
-    # plt.plot(times, powers)
 
-    err = error_function(graph, target, 5)
+    plt.plot(temp_graph.T[0], temp_graph.T[1])
+    plt.plot(power_graph.T[0], power_graph.T[1])
+
+    err = error_function(temp_graph, target, 5)
     print("error :", err)
     plt.show()

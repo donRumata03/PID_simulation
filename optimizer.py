@@ -4,6 +4,7 @@ import numpy as np
 from simulator import simulate
 from error_counter import error_function
 from ga import *
+from newton_method import *
 
 def recursive_gen_all_variants(lasted, res, this_res):
     if not lasted:
@@ -44,7 +45,7 @@ def dummy_optimize_coeffs(pid_func, err_func, coeff_data : list): # coeff_data =
     return best_err, best_set
 
 
-def ga_optimize(fitness_func, coeff_data : list, pop_size = 10, parents_percent = 0.9, iterations = 100, _error_function = None): # coeff_data : [(1, 10), (0.001, 0.002)...] -> [3, 0.0015, ....]
+def ga_optimize(fitness_func, coeff_data : list, pop_size = 30, parents_percent = 0.9, iterations = 2000, _error_function = None): # coeff_data : [(1, 10), (0.001, 0.002)...] -> [3, 0.0015, ....]
     num_genes = len(coeff_data)
     number_of_parents = int(parents_percent * pop_size)
     offspring_size = pop_size - number_of_parents
@@ -122,6 +123,8 @@ if __name__ == '__main__':
     best, coeffs = ga_optimize(coeff_fitness_function, [(-1, 20), (-1, 30), (0, 0)])
     print("Best error function:",  1 / best)
     print("Resultive coeffs:", coeffs)
+
+    best_coeffs = newton_optimize()
 
 # print(dummy_optimize_coeffs(simulate, error_function, [(100, 200, 1), (0, 0.01, 0.005), (0, 1, 0.1)]))
 
